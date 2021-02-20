@@ -1,6 +1,6 @@
 FROM meet_base:latest as builder
 
-ADD https://dl.eff.org/certbot-auto /usr/local/bin/
+#ADD https://dl.eff.org/certbot-auto /usr/local/bin/
 
 COPY rootfs/ /
 
@@ -12,9 +12,9 @@ RUN \
 WORKDIR /
 
 #Install node and npm
-RUN \
-	curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - \
-	&& apt-get install nodejs 
+RUN apt-get autoremove -y 
+RUN curl -sL https://deb.nodesource.com/setup_14.x | sudo bash - 
+RUN apt-get install nodejs 
 
 WORKDIR /var/www/html/
 
