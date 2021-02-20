@@ -1,5 +1,4 @@
-ARG JITSI_REPO=myjitsi
-FROM myjitsidocker_base:latest as builder
+FROM meet_base:latest as builder
 
 WORKDIR /
 
