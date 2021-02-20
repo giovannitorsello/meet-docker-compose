@@ -77,7 +77,8 @@ services:
             - PUBLIC_URL
             - TZ
         networks:
-            meet.jitsi:
+            meet:
+                ipv4_address: 10.1.1.2
                 aliases:
                     - ${XMPP_DOMAIN}
                     #- ${XMPP_INTERNAL_MUC_DOMAIN}
@@ -113,7 +114,8 @@ services:
         volumes:
             - ${CONFIG}/:/config
         networks:
-            meet.jitsi:
+            meet:
+                ipv4_address: 10.1.1.3
     videobridge:
         hostname: "videobridge"
         build: ./videobridge
@@ -144,7 +146,8 @@ services:
         depends_on:
             - prosody
         networks:
-            meet.jitsi:
+            meet:
+                ipv4_address: 10.1.1.4
                 aliases:
                     - jvb.meet.jitsi
 # Frontend
@@ -240,8 +243,14 @@ services:
             - XMPP_RECORDER_DOMAIN
             - TOKEN_AUTH_URL
         networks:
-            meet.jitsi:
+            meet:
+                ipv4_address: 10.1.1.5
                 aliases:
                     - ${XMPP_DOMAIN}
 networks:
-    meet.jitsi:
+    meet:
+        driver: bridge
+        ipam:
+            config:
+                - subnet: 10.1.1.0/24
+                
