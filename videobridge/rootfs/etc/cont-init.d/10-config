@@ -1,0 +1,28 @@
+#!/usr/bin/with-contenv bash
+
+#export LOCAL_ADDRESS=$(ip addr show dev "$(ip route|awk '/^default/ { print $5 }')" | grep -oP '(?<=inet\s)\d+(\.\d+){3}')
+export LOCAL_ADDRESS=`hostname -i`
+
+if [[ -z $JVB_AUTH_PASSWORD ]]; then
+    echo 'FATAL ERROR: JVB auth password must be set'
+    exit 1
+fi
+
+OLD_JVB_AUTH_PASSWORD=passw0rd
+if [[ "$JVB_AUTH_PASSWORD" == "$OLD_JVB_AUTH_PASSWORD" ]]; then
+    echo 'FATAL ERROR: JVB auth password must be changed, check the README'
+    exit 1
+fi
+
+envsubst < /defaults/sip-communicator.properties > /config/jvb/sip-communicator.properties
+if [[ -f /config/jvb/custom-sip-communicator.properties ]]; then
+    cat /config/jvb/custom-sip-communicator.properties >> /config/sip-communicator.properties
+fi
+
+envsubst < /defaults/jvb.conf > /config/jvb/jvb.conf
+
+if [[ ! -f /config/jvb/logging.properties ]]; then
+    cp /defaults/jvb/logging.properties /config/jvb
+fi
+
+chown -R jvb:jitsi /config/jvb

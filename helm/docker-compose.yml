@@ -1,0 +1,196 @@
+version: "3"
+
+services:
+    base:
+        build: ./base
+        container_name: base
+        expose:
+            - "80"
+            - "443"
+    prosody:
+        hostname: ${XMPP_DOMAIN}
+        build: ./prosody
+        restart: ${RESTART_POLICY}
+        container_name: prosody
+        depends_on:
+            - base       
+        expose:
+            - "5222"
+            - "5269"
+            - "5280"
+            - "5347"
+        volumes:
+            - ${CONFIG}/prosody:/etc/prosody:Z
+            - ${CONFIG}/prosody/prosody-plugins-custom:/prosody-plugins-custom:Z
+        environment:
+            - PROSODY_CFGDIR
+            - AUTH_TYPE
+            - ENABLE_AUTH
+            - ENABLE_GUESTS
+            - ENABLE_LOBBY
+            - ENABLE_XMPP_WEBSOCKET
+            - GLOBAL_MODULES
+            - GLOBAL_CONFIG
+            - LDAP_URL
+            - LDAP_BASE
+            - LDAP_BINDDN
+            - LDAP_BINDPW
+            - LDAP_FILTER
+            - LDAP_AUTH_METHOD
+            - LDAP_VERSION
+            - LDAP_USE_TLS
+            - LDAP_TLS_CIPHERS
+            - LDAP_TLS_CHECK_PEER
+            - LDAP_TLS_CACERT_FILE
+            - LDAP_TLS_CACERT_DIR
+            - LDAP_START_TLS
+            - XMPP_DOMAIN
+            - XMPP_AUTH_DOMAIN
+            - XMPP_GUEST_DOMAIN
+            - XMPP_MUC_DOMAIN
+            - XMPP_INTERNAL_MUC_DOMAIN
+            - XMPP_MODULES
+            - XMPP_MUC_MODULES
+            - XMPP_INTERNAL_MUC_MODULES
+            - XMPP_RECORDER_DOMAIN
+            - JICOFO_COMPONENT_SECRET
+            - JICOFO_AUTH_USER
+            - JICOFO_AUTH_PASSWORD
+            - JVB_AUTH_USER
+            - JVB_AUTH_PASSWORD
+            - JIGASI_XMPP_USER
+            - JIGASI_XMPP_PASSWORD
+            - JIBRI_XMPP_USER
+            - JIBRI_XMPP_PASSWORD
+            - JIBRI_RECORDER_USER
+            - JIBRI_RECORDER_PASSWORD
+            - JWT_APP_ID
+            - JWT_APP_SECRET
+            - JWT_ACCEPTED_ISSUERS
+            - JWT_ACCEPTED_AUDIENCES
+            - JWT_ASAP_KEYSERVER
+            - JWT_ALLOW_EMPTY
+            - JWT_AUTH_TYPE
+            - JWT_TOKEN_AUTH_MODULE
+            - LOG_LEVEL
+            - PUBLIC_URL
+            - TZ
+        networks:
+            meet.jitsi:
+                aliases:
+                    - ${XMPP_DOMAIN}
+                    #- ${XMPP_INTERNAL_MUC_DOMAIN}
+                    #- ${XMPP_MUC_DOMAIN}
+                    #- auth.${XMPP_DOMAIN}
+                    #- focus.${XMPP_DOMAIN}
+    jicofo:
+        hostname: "jicofo"
+        build: ./jicofo
+        restart: ${RESTART_POLICY}
+        container_name: jicofo
+        environment:
+            - JVB_BREWERY_MUC
+            - XMPP_INTERNAL_MUC_DOMAIN            
+            - JIBRI_BREWERY_MUC
+            - JIBRI_PENDING_TIMEOUT
+            - JIGASI_BREWERY_MUC
+            - XMPP_MUC_DOMAIN
+            - JICOFO_RESERVATION_REST_BASE_URL
+            - JICOFO_ENABLE_HEALTH_CHECKS           
+            - AUTH_TYPE
+            - ENABLE_AUTH
+            - XMPP_DOMAIN
+            - XMPP_AUTH_DOMAIN
+            - XMPP_SERVER
+            - JICOFO_COMPONENT_SECRET
+            - JICOFO_AUTH_USER
+            - JICOFO_AUTH_PASSWORD
+            - JIGASI_SIP_URI                        
+            - TZ        
+        depends_on:
+            - prosody
+        volumes:
+            - ${CONFIG}/:/config
+        networks:
+            meet.jitsi:
+    videobridge:
+        hostname: "videobridge"
+        build: ./videobridge
+        container_name: videobridge
+        ports:
+            - "10000:10000/udp"
+            - "4443:4443/tcp"
+        volumes:
+            - ./config:/config
+        environment:
+            - DOCKER_HOST_ADDRESS
+            - XMPP_AUTH_DOMAIN
+            - XMPP_INTERNAL_MUC_DOMAIN
+            - XMPP_SERVER
+            - JVB_AUTH_USER
+            - JVB_AUTH_PASSWORD
+            - JVB_BREWERY_MUC
+            - JVB_PORT
+            - JVB_TCP_HARVESTER_DISABLED
+            - JVB_TCP_PORT
+            - JVB_TCP_MAPPED_PORT
+            - JVB_STUN_SERVERS
+            - JVB_ENABLE_APIS
+            - JVB_WS_DOMAIN
+            - JVB_WS_SERVER_ID
+            - PUBLIC_URL
+            - TZ        
+        depends_on:
+            - prosody
+        networks:
+            meet.jitsi:
+                aliases:
+                    - jvb.meet.jitsi
+    jigasi:
+        hostname: "jigasi"
+        build: ./jigasi
+        restart: ${RESTART_POLICY}
+        container_name: jigasi
+        ports:
+            - '10000-20000:10000-20000/udp'
+        volumes:
+            - ./config:/config
+            - ./config/transcripts:/tmp/transcripts:Z
+        environment:
+            - ENABLE_AUTH
+            - XMPP_AUTH_DOMAIN
+            - XMPP_INTERNAL_MUC_DOMAIN
+            - XMPP_SERVER
+            - XMPP_DOMAIN
+            - PUBLIC_URL
+            - JIGASI_SIP_URI
+            - JIGASI_SIP_PASSWORD
+            - JIGASI_SIP_SERVER
+            - JIGASI_SIP_PORT
+            - JIGASI_SIP_TRANSPORT
+            - JIGASI_XMPP_USER
+            - JIGASI_XMPP_PASSWORD
+            - JIGASI_BREWERY_MUC
+            - JIGASI_PORT_MIN
+            - JIGASI_PORT_MAX
+            - JIGASI_HEALTH_CHECK_SIP_URI
+            - JIGASI_HEALTH_CHECK_INTERVAL
+            - JIGASI_SIP_KEEP_ALIVE_METHOD
+            - JIGASI_ENABLE_SDES_SRTP
+            - ENABLE_TRANSCRIPTIONS
+            - JIGASI_TRANSCRIBER_ADVERTISE_URL
+            - JIGASI_TRANSCRIBER_RECORD_AUDIO
+            - JIGASI_TRANSCRIBER_SEND_TXT
+            - GC_PROJECT_ID
+            - GC_PRIVATE_KEY_ID
+            - GC_PRIVATE_KEY
+            - GC_CLIENT_EMAIL
+            - GC_CLIENT_ID
+            - GC_CLIENT_CERT_URL
+            - TZ
+        depends_on:
+            - prosody
+        networks:
+            meet.jitsi:
+networks:
+    meet.jitsi:

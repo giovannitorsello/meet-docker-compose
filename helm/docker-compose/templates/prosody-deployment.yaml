@@ -1,0 +1,52 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  annotations:
+    kompose.cmd: kompose convert -c
+    kompose.version: 1.21.0 (992df58d8)
+  creationTimestamp: null
+  labels:
+    io.kompose.service: prosody
+  name: prosody
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      io.kompose.service: prosody
+  strategy:
+    type: Recreate
+  template:
+    metadata:
+      annotations:
+        kompose.cmd: kompose convert -c
+        kompose.version: 1.21.0 (992df58d8)
+      creationTimestamp: null
+      labels:
+        io.kompose.network/meet.jitsi: "true"
+        io.kompose.service: prosody
+    spec:
+      containers:
+      - image: prosody
+        imagePullPolicy: ""
+        name: prosody
+        ports:
+        - containerPort: 5222
+        - containerPort: 5269
+        - containerPort: 5280
+        - containerPort: 5347
+        resources: {}
+        volumeMounts:
+        - mountPath: /etc/prosody
+          name: prosody-claim0
+        - mountPath: /prosody-plugins-custom
+          name: prosody-claim1
+      restartPolicy: Always
+      serviceAccountName: ""
+      volumes:
+      - name: prosody-claim0
+        persistentVolumeClaim:
+          claimName: prosody-claim0
+      - name: prosody-claim1
+        persistentVolumeClaim:
+          claimName: prosody-claim1
+status: {}

@@ -1,0 +1,14 @@
+apiVersion: extensions/v1beta1
+kind: NetworkPolicy
+metadata:
+  creationTimestamp: null
+  name: meet.jitsi
+spec:
+  ingress:
+  - from:
+    - podSelector:
+        matchLabels:
+          io.kompose.network/meet.jitsi: "true"
+  podSelector:
+    matchLabels:
+      io.kompose.network/meet.jitsi: "true"

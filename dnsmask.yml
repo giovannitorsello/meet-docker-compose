@@ -1,0 +1,15 @@
+ #dnsmasq:
+    #    image: andyshinn/dnsmasq:2.76
+    #    ports:
+    #        - 10053:53/tcp
+    #        - 10053:53/udp
+    #    command: 
+    #        - -W 
+    #        - _http._tcp.router.lipe-routing.svc.cluster.local,pod-1,80
+    #        - -W
+    #        - _http._tcp.router.lipe-routing.svc.cluster.local,pod-2,80
+    #        - -A
+    #        - /pod-1/10.0.0.1
+    #        - -A
+    #        - /pod-2/10.0.0.2
+    #    cap_add: [ NET_ADMIN ]

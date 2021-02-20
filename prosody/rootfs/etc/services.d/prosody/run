@@ -1,0 +1,20 @@
+#!/usr/bin/with-contenv bash
+#export CFG_DATADIR=/config/data
+#/etc/prosody/certs/generate-prosody-certs.sh
+#chmod a+r /etc/prosody/certs/*
+
+#create Jicofo access
+#prosodyctl register $JICOFO_AUTH_USER $XMPP_AUTH_DOMAIN $JICOFO_AUTH_PASSWORD
+#prosodyctl adduser $JICOFO_AUTH_USER@$XMPP_AUTH_DOMAIN <<EOF
+#$JICOFO_AUTH_PASSWORD
+#$JICOFO_AUTH_PASSWORD
+#EOF
+
+#create Videobridge access
+#prosodyctl register $JVB_AUTH_USER $XMPP_AUTH_DOMAIN $JVB_AUTH_PASSWORD
+#prosodyctl adduser $JVB_AUTH_USER@$XMPP_AUTH_DOMAIN <<EOF
+#$JVB_AUTH_PASSWORD
+#$JVB_AUTH_PASSWORD
+#EOF
+
+exec s6-setuidgid prosody prosody -F 
