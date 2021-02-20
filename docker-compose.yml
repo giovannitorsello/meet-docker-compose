@@ -120,6 +120,7 @@ services:
         hostname: "videobridge"
         build: ./videobridge
         container_name: videobridge
+        restart: ${RESTART_POLICY}
         ports:
             - "10000:10000/udp"
             - "4443:4443/tcp"
@@ -155,6 +156,7 @@ services:
         hostname: "frontend"
         build: ./web
         container_name: "frontend"
+        restart: ${RESTART_POLICY}
         depends_on:
             - base
         ports:
@@ -253,4 +255,4 @@ networks:
         ipam:
             config:
                 - subnet: 10.1.1.0/24
-                
+
