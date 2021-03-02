@@ -26,8 +26,8 @@ RUN git clone https://github.com/giovannitorsello/custom-jitsi-meet-web.git \
 RUN git clone https://github.com/jitsi/lib-jitsi-meet.git \
 	&& cd lib-jitsi-meet \
 	&& npm install \
-	&& npm run postinstall \
-	&& npm link
+	&& npm link \
+	&& npm run postinstall 
 
 WORKDIR /var/www/html/
 RUN cd meet \
