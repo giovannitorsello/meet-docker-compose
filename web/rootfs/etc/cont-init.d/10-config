@@ -50,7 +50,13 @@ if [[ $ENABLE_LETSENCRYPT -eq 1 ]]; then
         cp /defaults/letsencrypt-renew /etc/cron.daily/
     fi
 else
-        #echo "Generating self-signed keys in /config/keys, you can replace these with your own keys if required"
-        #SUBJECT="/C=US/ST=TX/L=Austin/O=myorg.org/OU=MyOrg/CN=*"
-        #openssl req -new -x509 -days 3650 -nodes -out /config/keys/fullchain.pem -keyout /config/keys/privkey.key -subj "$SUBJECT"
+        FILE="/config/keys/fullchain.pem"
+        if [ -f "$FILE" ]; then
+            echo "Certificate exists"
+        else 
+            echo "Certificate does not exist."
+            echo "Generating self-signed keys in /config/keys, you can replace these with your own keys if required"
+            SUBJECT="/C=IT/ST=TX/L=Lecce/O=tiledesk.com/OU=Teledesk/CN=*"
+            openssl req -new -x509 -days 3650 -nodes -out /config/keys/fullchain.pem -keyout /config/keys/privkey.key -subj "$SUBJECT"
+        fi
 fi
