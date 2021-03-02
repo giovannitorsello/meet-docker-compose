@@ -19,25 +19,22 @@ RUN apt-get install nodejs
 WORKDIR /var/www/html/
 
 #Install graphic frontend and lib-jitsi-meet
-RUN git clone https://github.com/giovannitorsello/custom-jitsi-meet-web.git \
+RUN \
+	git clone https://github.com/giovannitorsello/custom-jitsi-meet-web.git \
 	&& mv ./custom-jitsi-meet-web ./meet \
-	&& cd meet
-
-RUN git clone https://github.com/jitsi/lib-jitsi-meet.git \
+	&& cd meet \
+	&& git clone https://github.com/jitsi/lib-jitsi-meet.git \
 	&& cd lib-jitsi-meet \
 	&& npm install \
+	&& npm run postinstall \
 	&& npm link \
-	&& npm run postinstall 
-
-WORKDIR /var/www/html/
-RUN cd meet \
+	&& cd .. \
 	&& npm link lib-jitsi-meet \
 	&& npm install \
-	&& npm run postinstall 
+	&& npm run postinstall \
+	&& make \
+	&& chown -Rf www-data.www-data /var/www/html
 
-WORKDIR /var/www/html/meet
-RUN make 
-RUN chown -Rf www-data.www-data /var/www/html
 
 EXPOSE 80 443
 
