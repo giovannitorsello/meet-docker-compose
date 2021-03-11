@@ -1,6 +1,7 @@
 admins = {
     "focus@auth.meet.local",
-    "jvb@auth.meet.local"
+    "jvb@auth.meet.local",
+    "@auth.meet.local"
 }
 
 plugin_paths = { "/prosody-plugins/", "/prosody-plugins-custom" }
@@ -77,10 +78,10 @@ Component "internal-muc.meet.local" "muc"
 
 Component "muc.meet.local" "muc"
     storage = "memory"
-    modules_enabled = {
-        "muc_meeting_id";
-        "token_verification";
-    }
+    -- modules_enabled = {
+    --    "muc_meeting_id";
+    --    "token_verification";
+    --}
     muc_room_cache_size = 1000
     muc_room_locking = false
     muc_room_default_public_jids = true
@@ -99,3 +100,10 @@ Component "lobby.meet.local" "muc"
     restrict_room_creation = true
     muc_room_locking = false
     muc_room_default_public_jids = true
+
+Component "conference.meet.local" "muc"
+    storage = "memory"
+    restrict_room_creation = false
+    muc_room_locking = false
+    muc_room_default_public_jids = true
+

@@ -14,15 +14,10 @@ if [[ "$JVB_AUTH_PASSWORD" == "$OLD_JVB_AUTH_PASSWORD" ]]; then
     exit 1
 fi
 
-envsubst < /defaults/sip-communicator.properties > /config/jvb/sip-communicator.properties
-if [[ -f /config/jvb/custom-sip-communicator.properties ]]; then
-    cat /config/jvb/custom-sip-communicator.properties >> /config/sip-communicator.properties
-fi
+envsubst < /defaults/sip-communicator.properties > /etc/jitsi/videobridge/sip-communicator.properties
+envsubst < /defaults/jvb.conf > /etc/jitsi/videobridge/jvb.conf
+envsubst < /defaults/config > /etc/jitsi/videobridge/config
+cp /defaults/logging.properties /etc/jitsi/videobridge/
 
-envsubst < /defaults/jvb.conf > /config/jvb/jvb.conf
 
-if [[ ! -f /config/jvb/logging.properties ]]; then
-    cp /defaults/jvb/logging.properties /config/jvb
-fi
-
-chown -R jvb:jitsi /config/jvb
+chown -R jvb:jitsi /etc/jitsi/videobridge/

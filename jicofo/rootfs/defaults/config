@@ -1,24 +1,25 @@
 # Jitsi Conference Focus settings
 # sets the host name of the XMPP server
+JICOFO_MAX_MEMORY=1024m
 JICOFO_HOST=localhost
 
 # sets the XMPP domain (default: none)
-JICOFO_HOSTNAME=meet.torsello.ovh
+JICOFO_HOSTNAME=${XMPP_DOMAIN}
 
 # sets the secret used to authenticate as an XMPP component
-JICOFO_SECRET=RiAborQO
+JICOFO_SECRET=${JICOFO_COMPONENT_SECRET}
 
 # sets the port to use for the XMPP component connection
 JICOFO_PORT=5347
 
 # sets the XMPP domain name to use for XMPP user logins
-JICOFO_AUTH_DOMAIN=auth.meet.torsello.ovh
+JICOFO_AUTH_DOMAIN=${XMPP_AUTH_DOMAIN}
 
 # sets the username to use for XMPP user logins
-JICOFO_AUTH_USER=focus
+JICOFO_AUTH_USER=${JICOFO_AUTH_USER}
 
 # sets the password to use for XMPP user logins
-JICOFO_AUTH_PASSWORD=1c1e551f670ff530bfcef46814505526
+JICOFO_AUTH_PASSWORD=${JICOFO_AUTH_PASSWORD}
 
 # extra options to pass to the jicofo daemon
 JICOFO_OPTS=""

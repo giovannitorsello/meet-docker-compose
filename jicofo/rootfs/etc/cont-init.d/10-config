@@ -1,29 +1,14 @@
 #!/usr/bin/with-contenv bash
+#Make prosody self signed certificate trusted
+cp -Rf /config/prosody/certs/*.crt /usr/local/share/ca-certificates/
+cp -Rf /config/prosody/certs/*.key /usr/local/share/ca-certificates/
+update-ca-certificates
 
-if [[ -z $JICOFO_COMPONENT_SECRET || -z $JICOFO_AUTH_PASSWORD ]]; then
-    echo 'FATAL ERROR: Jicofo component secret and auth password must be set'
-    exit 1
-fi
+mkdir -p /etc/jitsi/jicofo
+envsubst < /defaults/config > /etc/jitsi/jicofo/config
+envsubst < /defaults/sip-communicator.properties > /etc/jitsi/jicofo/sip-communicator.properties
+cp /defaults/logging.properties /etc/jitsi/jicofo
 
-OLD_JICOFO_COMPONENT_SECRET=s3cr37
-if [[ "$JICOFO_COMPONENT_SECRET" == "$OLD_JICOFO_COMPONENT_SECRET" ]]; then
-    echo 'FATAL ERROR: Jicofo component secret must be changed, check the README'
-    exit 1
-fi
 
-OLD_JICOFO_AUTH_PASSWORD=passw0rd
-if [[ "$JICOFO_AUTH_PASSWORD" == "$OLD_JICOFO_AUTH_PASSWORD" ]]; then
-    echo 'FATAL ERROR: Jicofo auth password must be changed, check the README'
-    exit 1
-fi
-
-if [[ ! -f /config/jicofo/sip-communicator.properties ]]; then
-    envsubst < /defaults/sip-communicator.properties > /config/jicofo/sip-communicator.properties
-fi
-
-if [[ ! -f /config/logging.properties ]]; then
-    cp /defaults/logging.properties /config/jicofo/
-fi
-
-chown -R jicofo:jitsi /config/jicofo
-chmod -R a+r /config/jicofo
+chown -R jicofo:jitsi /etc/jitsi/jicofo
+chmod -R a+r /etc/jitsi/jicofo

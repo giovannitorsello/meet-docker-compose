@@ -5,8 +5,18 @@ cp -Rf /config/prosody/certs/*.crt /usr/local/share/ca-certificates/
 cp -Rf /config/prosody/certs/*.key /usr/local/share/ca-certificates/
 update-ca-certificates
 
+mkdir -p /etc/jitsi/jicofo
+envsubst < /defaults/sip-communicator.properties > /etc/jitsi/jicofo/sip-communicator.properties
+cp /defaults/logging.properties /etc/jitsi/jicofo
+cp /defaults/config /etc/jitsi/jicofo
 
-JAVA_SYS_PROPS="-Dnet.java.sip.communicator.SC_HOME_DIR_LOCATION=/ -Dnet.java.sip.communicator.SC_HOME_DIR_NAME=/config/jicofo -Djava.util.logging.config.file=/config/jicofo/logging.properties"
+
+chown -R jicofo:jitsi /etc/jitsi/jicofo
+chmod -R a+r /etc/jitsi/jicofo
+
+
+
+JAVA_SYS_PROPS="-Dnet.java.sip.communicator.SC_HOME_DIR_LOCATION=/ -Dnet.java.sip.communicator.SC_HOME_DIR_NAME=/etc/jitsi/jicofo -Djava.util.logging.config.file=/etc/jitsi/jicofo/logging.properties"
 DAEMON=/usr/share/jicofo/jicofo.sh
 DAEMON_DIR=/usr/share/jicofo/
 DAEMON_OPTS="--domain=$XMPP_DOMAIN --host=$XMPP_SERVER --secret=$JICOFO_COMPONENT_SECRET --user_name=$JICOFO_AUTH_USER --user_domain=$XMPP_AUTH_DOMAIN --user_password=$JICOFO_AUTH_PASSWORD"

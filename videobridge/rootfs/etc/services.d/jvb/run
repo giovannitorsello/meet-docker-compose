@@ -1,7 +1,9 @@
 #!/usr/bin/with-contenv bash
 export LOCAL_ADDRESS=`hostname -i`
-export JAVA_SYS_PROPS="-Dnet.java.sip.communicator.SC_HOME_DIR_LOCATION=/ -Dnet.java.sip.communicator.SC_HOME_DIR_NAME=/config/jvb -Djava.util.logging.config.file=/config/jvb/logging.properties -Dconfig.file=/config/jvb/jvb.conf"
+#export JAVA_SYS_PROPS="-Dnet.java.sip.communicator.SC_HOME_DIR_LOCATION=/ -Dnet.java.sip.communicator.SC_HOME_DIR_NAME=/config/jvb -Djava.util.logging.config.file=/config/jvb/logging.properties -Dconfig.file=/config/jvb/jvb.conf"
 
+export JAVA_SYS_PROPS="-Dnet.java.sip.communicator.SC_HOME_DIR_LOCATION=/ -Dnet.java.sip.communicator.SC_HOME_DIR_NAME=/etc/jitsi/videobridge/ -Djava.util.logging.config.file=/etc/jitsi/videobridge/logging.properties -Dconfig.file=/etc/jitsi/videobridge/jvb.conf"
 DAEMON=/usr/share/jitsi-videobridge/jvb.sh
 
-exec s6-setuidgid root /bin/bash -c "exec $DAEMON --apis=${JVB_ENABLE_APIS:="none"}"
+#exec s6-setuidgid root /bin/bash -c "exec $DAEMON --apis=${JVB_ENABLE_APIS:="none"}"
+exec s6-setuidgid root /bin/bash -c "exec $DAEMON --apis=rest,xmpp"

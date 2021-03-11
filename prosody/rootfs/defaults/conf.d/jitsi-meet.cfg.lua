@@ -1,6 +1,7 @@
 admins = {
     "${JICOFO_AUTH_USER}@${XMPP_AUTH_DOMAIN}",
-    "${JVB_AUTH_USER}@${XMPP_AUTH_DOMAIN}"
+    "${JVB_AUTH_USER}@${XMPP_AUTH_DOMAIN}",
+    "${JVB_BREWERY_MUC}@${XMPP_AUTH_DOMAIN}"
 }
 
 plugin_paths = { "/prosody-plugins/", "/prosody-plugins-custom" }
@@ -77,10 +78,10 @@ Component "${XMPP_INTERNAL_MUC_DOMAIN}" "muc"
 
 Component "${XMPP_MUC_DOMAIN}" "muc"
     storage = "memory"
-    modules_enabled = {
-        "muc_meeting_id";
-        "${JWT_TOKEN_AUTH_MODULE}";
-    }
+    -- modules_enabled = {
+    --    "muc_meeting_id";
+    --    "${JWT_TOKEN_AUTH_MODULE}";
+    --}
     muc_room_cache_size = 1000
     muc_room_locking = false
     muc_room_default_public_jids = true
@@ -99,3 +100,10 @@ Component "lobby.${XMPP_DOMAIN}" "muc"
     restrict_room_creation = true
     muc_room_locking = false
     muc_room_default_public_jids = true
+
+Component "conference.${XMPP_DOMAIN}" "muc"
+    storage = "memory"
+    restrict_room_creation = false
+    muc_room_locking = false
+    muc_room_default_public_jids = true
+
