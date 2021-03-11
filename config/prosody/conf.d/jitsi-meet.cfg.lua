@@ -7,7 +7,7 @@ admins = {
 plugin_paths = { "/prosody-plugins/", "/prosody-plugins-custom" }
 http_default_host = "meet.local"
 
-cross_domain_websocket = { "https://meet.local" };
+cross_domain_websocket = { "https://www.meet.local" };
 consider_bosh_secure = true;
 
 VirtualHost "meet.local"
