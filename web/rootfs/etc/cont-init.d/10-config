@@ -17,8 +17,8 @@ cp /defaults/meet.conf /etc/nginx/meet.conf
 ip=`hostname -I`
 export WEBPACK_DEV_SERVER_PROXY_TARGET="https://$ip"
 cd /var/www/html/meet/
-cp /config/config.js > /var/www/html/meet/config.js
-cp /config/interface_config.js > /var/www/html/meet/interface_config.js
+cp /config/web/config.js  /var/www/html/meet/config.js
+cp /config/web/interface_config.js  /var/www/html/meet/interface_config.js
 
 make
 
