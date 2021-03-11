@@ -3,10 +3,10 @@
 var config = {
     // Connection
     //
-    tiledesk: { projectId: '5ff33d8af5195b0019b23c54' },
+    tiledesk: { projectId: ${TILEDESK_ID} },
     hosts: {
         // XMPP domain.
-        domain: 'meet.local',
+        domain: ${XMPP_DOMAIN},
 
         // When using authentication, domain for guest users.
         //anonymousdomain: 'guest.meet.tiledesk.com',
@@ -21,13 +21,13 @@ var config = {
         // focus: 'focus.meet.tiledesk.com',
 
         // XMPP MUC domain. FIXME: use XEP-0030 to discover it.
-        muc: 'muc.meet.local',
+        muc: ${XMPP_MUC_DOMAIN},
 	    // bridge: 'jitsi-videobridge.meet.tiledesk.com' 
 	    // anonymousdomain: 'guest.meet.tiledesk.com'
     },
 
     // BOSH URL. FIXME: use XEP-0156 to discover it.
-    bosh: '//meet.local/http-bind',
+    bosh: ${XMPP_BOSH_URL_BASE},
 
 
     // Websocket URL

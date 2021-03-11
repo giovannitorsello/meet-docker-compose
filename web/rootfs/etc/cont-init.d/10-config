@@ -13,9 +13,13 @@ cp /defaults/ssl.conf /etc/nginx/ssl.conf
 cp /defaults/default /etc/nginx/sites-enabled/default
 cp /defaults/meet.conf /etc/nginx/meet.conf
 #sed -i 's/${DOMAIN}/'"${DOMAIN}"'/g' /etc/nginx/meet.conf
+
 ip=`hostname -I`
 export WEBPACK_DEV_SERVER_PROXY_TARGET="https://$ip"
 cd /var/www/html/meet/
+cp /config/config.js > /var/www/html/meet/config.js
+cp /config/interface_config.js > /var/www/html/meet/interface_config.js
+
 make
 
 # generate keys (maybe)
