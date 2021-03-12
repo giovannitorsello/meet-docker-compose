@@ -141,6 +141,7 @@ services:
             - DOCKER_HOST_ADDRESS
             - JVB_COMPONENT_SECRET
             - XMPP_DOMAIN
+            - XMPP_MUC_DOMAIN
             - XMPP_AUTH_DOMAIN
             - XMPP_INTERNAL_MUC_DOMAIN
             - XMPP_SERVER

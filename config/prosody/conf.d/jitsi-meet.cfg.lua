@@ -9,6 +9,7 @@ http_default_host = "meet.local"
 
 cross_domain_websocket = { "https://www.meet.local" };
 consider_bosh_secure = true;
+cross_domain_bosh = true;
 
 
 -- XMPP domain definition and components
@@ -86,11 +87,12 @@ VirtualHost "recorder.meet.torsello.ovh"
     }
     authentication = "internal_hashed"
 
-Component "internal-muc.meet.local" "muc"
-    storage = "memory"
+Component "internalmuc.meet.local" "muc"
     modules_enabled = {
         "ping";
     }
+    storage = "memory"
+    muc_room_cache_size = 1000
     muc_room_locking = false
     muc_room_default_public_jids = true
 

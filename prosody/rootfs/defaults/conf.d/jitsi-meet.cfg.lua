@@ -9,6 +9,7 @@ http_default_host = "${XMPP_DOMAIN}"
 
 cross_domain_websocket = { "${PUBLIC_URL}" };
 consider_bosh_secure = true;
+cross_domain_bosh = true;
 
 
 -- XMPP domain definition and components
@@ -87,10 +88,11 @@ VirtualHost "${XMPP_RECORDER_DOMAIN}"
     authentication = "internal_hashed"
 
 Component "${XMPP_INTERNAL_MUC_DOMAIN}" "muc"
-    storage = "memory"
     modules_enabled = {
         "ping";
     }
+    storage = "memory"
+    muc_room_cache_size = 1000
     muc_room_locking = false
     muc_room_default_public_jids = true
 
