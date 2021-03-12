@@ -7,3 +7,4 @@ DAEMON=/usr/share/jitsi-videobridge/jvb.sh
 
 #exec s6-setuidgid root /bin/bash -c "exec $DAEMON --apis=${JVB_ENABLE_APIS:="none"}"
 exec s6-setuidgid root /bin/bash -c "exec $DAEMON --apis=rest,xmpp"
+#exec s6-setuidgid root /bin/bash -c "exec $DAEMON --apis=none"

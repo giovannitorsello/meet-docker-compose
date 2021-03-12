@@ -82,7 +82,7 @@ services:
                 aliases:
                     - ${XMPP_DOMAIN}
                     - auth.${XMPP_DOMAIN}
-                    - focus.${XMPP_DOMAIN}
+                    - focus.${XMPP_DOMAIN}                    
                     - ${XMPP_INTERNAL_MUC_DOMAIN}
                     - ${XMPP_MUC_DOMAIN}
                     
@@ -147,8 +147,8 @@ services:
             - JVB_AUTH_USER
             - JVB_AUTH_PASSWORD
             - JVB_BREWERY_MUC
-            - JVB_PORT
-            - JVB_TCP_HARVESTER_DISABLED
+            - JVB_UDP_PORT
+            - JVB_TCP_HARVESTER
             - JVB_TCP_PORT
             - JVB_TCP_MAPPED_PORT
             - JVB_STUN_SERVERS
@@ -163,7 +163,7 @@ services:
             meet:
                 ipv4_address: 10.1.1.4
                 aliases:
-                    - jvb.meet.local
+                    - videobridge.meet.local
 # Frontend
     web:
         hostname: "frontend"

@@ -35,7 +35,6 @@ RUN \
 	&& make \
 	&& chown -Rf www-data.www-data /var/www/html
 
-
 EXPOSE 80 443
 
 VOLUME ["/config"]

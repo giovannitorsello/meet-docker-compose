@@ -21,28 +21,28 @@ var config = {
     },
     hosts: {
         // XMPP domain.
-        domain: 'meet.tiledesk.com',
+        domain: 'meet.local',
 
         // When using authentication, domain for guest users.
-        //anonymousdomain: 'guest.meet.tiledesk.com',
+        // anonymousdomain: 'guest.meet.local',
 
         // Domain for authenticated users. Defaults to <domain>.
-        // authdomain: 'meet.tiledesk.com',
+        // authdomain: 'meet.local',
 
         // Call control component (Jigasi).
-        // call_control: 'callcontrol.meet.tiledesk.com',
+        // call_control: 'callcontrol.meet.local',
 
         // Focus component domain. Defaults to focus.<domain>.
-        // focus: 'focus.meet.tiledesk.com',
+        // focus: 'focus.meet.local',
 
         // XMPP MUC domain. FIXME: use XEP-0030 to discover it.
-        muc: 'conference.meet.tiledesk.com',
-	// bridge: 'jitsi-videobridge.meet.tiledesk.com' 
-	// anonymousdomain: 'guest.meet.tiledesk.com'
+        muc: 'muc.meet.local',
+        // anonymousdomain: 'guest.meet.local'
+	    bridge: 'bridge.meet.local' 
     },
 
     // BOSH URL. FIXME: use XEP-0156 to discover it.
-    bosh: '//meet.tiledesk.com/http-bind',
+    bosh: '//meet.local/http-bind',
 
 
     // Websocket URL
