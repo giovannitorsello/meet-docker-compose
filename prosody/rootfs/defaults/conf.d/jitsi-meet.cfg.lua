@@ -28,6 +28,7 @@ VirtualHost "${XMPP_DOMAIN}"
     }
     modules_enabled = {
         "bosh";
+        "mod_turncredentials";
         "websocket";
         "smacks";
         "pubsub";
