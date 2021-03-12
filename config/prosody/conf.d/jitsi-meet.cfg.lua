@@ -28,6 +28,7 @@ VirtualHost "meet.local"
     }
     modules_enabled = {
         "bosh";
+        "mod_turncredentials";
         "websocket";
         "smacks";
         "pubsub";
